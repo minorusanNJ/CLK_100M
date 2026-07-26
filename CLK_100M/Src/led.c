@@ -9,5 +9,5 @@ void led_init(void)
 	RCC->AHB1ENR	|=	GPIOAEN;
 	GPIOA->MODER	&=			MODER_PA5_RESET;
 	GPIOA->MODER	|=	MODER_PA5_OUTPUT;
-	GPIOA->ODR		|=	ODR_PA5_H;
+	//GPIOA->ODR		|=	ODR_PA5_H;
 }
