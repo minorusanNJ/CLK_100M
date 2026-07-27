@@ -12,14 +12,18 @@
 #define CFGR_PPRE2					~(1U<<15)
 #define CFGR_PPRE1			(4U<<10)
 #define CFGR_HPRE					~(1U<<7)
-#define	PLLCFGR_PLLP				~(2U<<16)
-#define PLLCFGR_PLLN				~(0x137<<6)
-#define PLLCFGR_PLLM				~(0x3B<<0)
+#define	PLLCFGR_PLLP_RESET			//////////////
+#define	PLLCFGR_PLLP
+#define PLLCFGR_PLLN_RESET
+#define PLLCFGR_PLLN
+#define PLLCFGR_PLLM_RESET
+#define PLLCFGR_PLLM				//////////////
 #define PLLCFGR_PLLSRC		(1U<<22)
 #define CR_PLLON			(1U<<24)
 #define	CR_PLLRDY			(1U<<25)
 #define	CFGR_SW				(2U<<0)
 #define	CFGR_SWS			(2U<<2)
+#define CR_HSIOFF					~(1U<<0)
 
 void clk_100m_init(void)
 {
@@ -31,10 +35,11 @@ void clk_100m_init(void)
 	PWR->CR			|=	CR_VOS;
 	RCC->CFGR		&=			(CFGR_PPRE2 & CFGR_HPRE);
 	RCC->CFGR		|=	CFGR_PPRE1;
-	RCC->PLLCFGR	&=			(PLLCFGR_PLLP & PLLCFGR_PLLN & PLLCFGR_PLLM);
-	RCC->PLLCFGR 	|=	PLLCFGR_PLLSRC;
+	RCC->PLLCFGR	&=			;			//////////////////////////
+	RCC->PLLCFGR 	|=	PLLCFGR_PLLSRC;		//////////////////////////
 	RCC->CR			|=	CR_PLLON;
 	while(!(RCC->CR & CR_PLLRDY)){}
 	RCC->CFGR		|=	CFGR_SW;
 	while(!(RCC->CFGR & CFGR_SWS)){}
+	RCC->CR			&=		CR_HSIOFF;
 }
