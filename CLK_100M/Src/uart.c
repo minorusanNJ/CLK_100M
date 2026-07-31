@@ -11,7 +11,7 @@
 #define CR1_TE			(1U<<3)
 #define APB1_CLK		50000000UL
 #define BAUDV			115200UL
-#define	SR_TC			(1U<<6)
+#define	SR_TXE			(1U<<7)		//TC か　TXE　送信はTXEが効率的らしい
 
 void uart_init(void)
 {
@@ -26,7 +26,7 @@ void uart_init(void)
 
 void usart_tx_write(int ch)
 {
-	while(!(USART2->SR & SR_TC)){}
+	while(!(USART2->SR & SR_TXE)){}
 	USART2->DR = (ch & 0xFF);
 }
 int __io_putchar(int ch)
